@@ -19,8 +19,7 @@ def findMid(directory):
     
     for narrowPeak in os.listdir(directory):
         fileCheck = narrowPeak.split(".")
-        print(fileCheck)
-        print(fileCheck[-1])
+       
         if fileCheck[-1] == "narrowPeak":
             inFile = open(os.path.join(directory, narrowPeak), 'r')
             outName = "midpoints_" + narrowPeak  
@@ -28,7 +27,7 @@ def findMid(directory):
 
             for line in inFile:
                 items = line.split('\t')
-                midpoint = (int(items[2]) - int(items[1])) // 2
+                midpoint = ((int(items[2]) - int(items[1])) // 2) + int(items[1])
                 newStart = midpoint - 500
                 newEnd = midpoint + 500
             # ouput format: chr\t start\t end\t name\t midpoint\t strand\n
