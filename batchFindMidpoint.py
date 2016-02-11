@@ -16,21 +16,25 @@ import os
 def findMid(directory):
 
     print("Creating new .bed files in: " +  directory)
-
+    
     for narrowPeak in os.listdir(directory):
-        inFile = open(os.path.join(directory, narrowPeak), 'r')
-        outName = "midpoints_" + narrowPeak  
-        outFile = open(os.path.join(directory, outName), 'w')
+        fileCheck = narrowPeak.split(".")
+        print(fileCheck)
+        print(fileCheck[-1])
+        if fileCheck[-1] == "narrowPeak":
+            inFile = open(os.path.join(directory, narrowPeak), 'r')
+            outName = "midpoints_" + narrowPeak  
+            outFile = open(os.path.join(directory, outName), 'w')
 
-        for line in inFile:
-            items = line.split('\t')
-            midpoint = (int(items[2]) - int(items[1])) // 2
-            newStart = midpoint - 500
-            newEnd = midpoint + 500
+            for line in inFile:
+                items = line.split('\t')
+                midpoint = (int(items[2]) - int(items[1])) // 2
+                newStart = midpoint - 500
+                newEnd = midpoint + 500
             # ouput format: chr\t start\t end\t name\t midpoint\t strand\n
-            output = [items[0], "\t", str(newStart), "\t", str(newEnd), "\t", items[3], "\t", str(midpoint), "\t", "+", "\n"]
-            for i in output:
-                outFile.write(i)
+                output = [items[0], "\t", str(newStart), "\t", str(newEnd), "\t", items[3], "\t", str(midpoint), "\t", "+", "\n"]
+                for i in output:
+                    outFile.write(i)
 
 PATH = os.path.abspath(sys.argv[1])
 
